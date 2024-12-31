@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to 2025</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('DALL·E 2024-12-31 14.16.09 - A stunning outer space scene featuring a vibrant nebula with hues of purple, blue, and pink, surrounded by sparkling stars. Two realistic planets, one.webp') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .time-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 191, 255, 0.8);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .time-box:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            pointer-events: none;
+            animation: pulse 2s infinite;
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        .countdown .time-box .number {
+            animation: flip 0.6s ease-out;
+        }
+
+        @keyframes flip {
+            from {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateX(0);
+                opacity: 1;
+            }
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(2, 0, 36, 0.9), rgba(9, 9, 121, 0.9), rgba(0, 212, 255, 0.8));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #FFD700;
+            font-size: 3rem;
+            animation: fadeOut 10s ease-in-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .firework {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0));
+            animation: explode 2s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .fullscreen-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+            .time-box {
+                width: 80px;
+                height: 80px;
+            }
+            .number {
+                font-size: 2rem;
+            }
+            .label {
+                font-size: 0.8rem;
+            }
+            .fullscreen-button {
+                font-size: 0.8rem;
+                padding: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="countdown">
+        <div class="time-box">
+            <div>
+                <div class="number" id="days">00</div>
+                <div class="label">Days</div>
+            </div>
+        </div>
+        <div class="time-box">
+            <div>
+                <div class="number" id="hours">00</div>
+                <div class="label">Hours</div>
+            </div>
+        </div>
+        <div class="time-box">
+            <div>
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutes</div>
+            </div>
+        </div>
+        <div class="time-box">
+            <div>
+                <div class="number" id="seconds">00</div>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="celebration" class="celebration" style="display: none;">
+        <div>🎉 Happy New Year 2025! 🎉</div>
+        <div class="fireworks" id="fireworks"></div>
+    </div>
+
+    <audio id="celebrationAudio" src="happy-new-year.mp3" preload="auto"></audio>
+
+    <button class="fullscreen-button" onclick="toggleFullscreen()">Fullscreen</button>
+
+    <script>
+        const countdownDate = new Date("January 1, 2025 00:00:00").getTime();
+        let celebrationTimeout;
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * 100 + '%';
+            firework.style.animationDuration = Math.random() * 1.5 + 0.5 + 's';
+            document.getElementById('fireworks').appendChild(firework);
+            setTimeout(() => firework.remove(), 2000);
+        }
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            document.getElementById('stars').appendChild(star);
+            setTimeout(() => star.remove(), 5000);
+        }
+
+        function populateStars() {
+            for (let i = 0; i < 100; i++) {
+                createStar();
+            }
+            setInterval(createStar, 200);
+        }
+
+        function startCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'flex';
+
+            const audio = document.getElementById('celebrationAudio');
+            audio.play();
+
+            celebrationTimeout = setInterval(createFirework, 100); // Increase frequency of fireworks
+            setTimeout(() => {
+                clearInterval(celebrationTimeout);
+                celebration.style.display = 'none';
+            }, 10 * 60 * 1000); // 10 minutes
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = String(days).padStart(2, '0');
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(interval);
+                document.querySelector('.countdown').style.display = 'none';
+                startCelebration();
+            }
+        }
+
+        function addSpotifyLink() {
+            const spotifyButton = document.createElement('a');
+            spotifyButton.href = "https://open.spotify.com/playlist/4F9XjRMCeyxlmysK16V85W?si=59d9656e569243a6";
+            spotifyButton.target = "_blank";
+            spotifyButton.textContent = "🎵 Play Music on Spotify";
+            spotifyButton.style.cssText = "position: fixed; bottom: 20px; left: 20px; padding: 10px 20px; background: #1DB954; color: white; text-decoration: none; font-size: 1.2rem; border-radius: 5px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);";
+            document.body.appendChild(spotifyButton);
+
+            const amazonButton = document.createElement('a');
+            amazonButton.href = "https://music.amazon.com"; // Example Amazon Music link
+            amazonButton.target = "_blank";
+            amazonButton.textContent = "🎵 Play Music on Amazon Music";
+            amazonButton.style.cssText = "position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #FF9900; color: white; text-decoration: none; font-size: 1.2rem; border-radius: 5px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);";
+            document.body.appendChild(amazonButton);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+        populateStars();
+        addSpotifyLink();
+    </script>
+</body>
+</html>
